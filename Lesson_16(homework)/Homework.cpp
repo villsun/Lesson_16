@@ -4,6 +4,13 @@
 
 using namespace std;
 
+struct Person
+{
+	char name[200];
+	int age;
+	char phone_number[200];
+};
+
 int main()
 {
 

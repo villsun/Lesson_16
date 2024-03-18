@@ -108,16 +108,49 @@ void Show_People(Person* people, int size)
 
 }
 
+Person* Search_Person(Person* people, char* str_last_name, int size_1, int& size_2)
+{
+	int counter_1 = 0;
+	for (int i = 0; i < size_1; i++)
+	{
+		if (strcmp(people[i].name, str_last_name) == 0)
+		{
+			counter_1++;
+		}
+	}
+
+	size_2 = counter_1;
+
+	Person* surnames_found = new Person[counter_1];
+
+	for (int i = 0, j = 0; i < size_1; i++)
+	{
+		if (strcmp(people[i].name, str_last_name) == 0)
+		{
+			surnames_found[j] = people[i];
+			j++;
+		}
+	}
+
+	return surnames_found;
+}
+
 int main()
 {
-	int size;
-	Person* people = Reading_from_File(size);
+	int size_1;
+	Person* people = Reading_from_File(size_1);
 
 	/*Edit_Person(people, size);*/
 
-	Show_People(people, size);
+	Show_People(people, size_1);
+
+	int size_2;
+	char str[] = "Noina";
+	Person* surnames_found = Search_Person(people, str, size_1, size_2);
+	Show_People(surnames_found, size_2);
 
 	delete[] people;
+	delete[] surnames_found;
 
 	return 0;
 }

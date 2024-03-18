@@ -14,9 +14,9 @@ struct Person
 Person* Reading_from_File(int& size)
 {
 	FILE* p_file;
-	char str_file_name[200];
-	cout << "Enter file\n";
-	cin.getline(str_file_name, 200);
+	char str_file_name[200] = R"(F:\Temp_File\file_people.txt)";
+	/*cout << "Enter file\n";
+	cin.getline(str_file_name, 200);*/
 
 	p_file = fopen(str_file_name, "r");
 
@@ -97,9 +97,27 @@ void Edit_Person(Person* people, int size)
 	}
 }
 
+void Show_People(Person* people, int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		cout << "Last name: " << people[i].name << endl;
+		cout << "Age: " << people[i].age << endl;
+		cout << "Phone number: " << people[i].phone_number << endl;
+	}
+
+}
+
 int main()
 {
+	int size;
+	Person* people = Reading_from_File(size);
 
+	/*Edit_Person(people, size);*/
+
+	Show_People(people, size);
+
+	delete[] people;
 
 	return 0;
 }

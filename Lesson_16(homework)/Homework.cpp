@@ -166,6 +166,30 @@ void Add_Person(Person*& people, int& size)
 	people = new_person;
 }
 
+void Delete_Person(Person*& people, int& size)
+{
+	int user_input;
+	do
+	{
+		cout << "Enter index from 1 to size:\n";
+		cin >> user_input;
+	} while (user_input<1 || user_input>size);
+
+	Person* new_person = new Person[--size];
+	user_input--;
+	for (int i = 0; i < user_input; i++)
+	{
+		new_person[i] = people[i];
+	}
+
+	for (int i = user_input; i < size; i++)
+	{
+		new_person[i] = people[i + 1];
+	}
+
+	people = new_person;
+}
+
 int main()
 {
 	int size_1;
@@ -179,8 +203,12 @@ int main()
 	Person* surnames_found = Search_Person(people, str, size_1, size_2);
 	Show_People(surnames_found, size_2);*/
 
-	Add_Person(people, size_1);
-	Show_People(people, size_1); 
+	/*Add_Person(people, size_1);
+	Show_People(people, size_1); */
+
+	//Show_People(people, size_1);
+	//Delete_Person(people, size_1);
+	//Show_People(people, size_1);
 
 	delete[] people;
 	/*delete[] surnames_found;*/

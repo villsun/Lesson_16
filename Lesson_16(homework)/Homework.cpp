@@ -47,6 +47,30 @@ Person* Reading_from_File(int& size)
 	return people;
 }
 
+void Edit_Last_Name(Person* people, int index)
+{
+	cout << "Enter last name:\n";
+	char str[200];
+	cin >> str;
+	strcpy(people[index].name, str);
+}
+
+void Edit_Age(Person* people, int index)
+{
+	cout << "Enter new age:\n";
+	int new_age;
+	cin >> new_age;
+	people[index].age = new_age;
+}
+
+void Edit_Phone_Number(Person* people, int index)
+{
+	cout << "Enter phone number:\n";
+	char str[200];
+	cin >> str;
+	strcpy(people[index].phone_number, str);
+}
+
 void Edit_Person(Person* people, int size)
 {
 	int user_input;
@@ -63,34 +87,22 @@ void Edit_Person(Person* people, int size)
 
 	int user_input_edit;
 
-	cout << "What do you want edit:\n1 - Lasr name\n2 - Age\n3 - Phone number\n";
-	cin >> user_input;
+	cout << "What do you want edit:\n1 - Last name\n2 - Age\n3 - Phone number\n";
+	cin >> user_input_edit;
 
-	char str_user_input[200];
-	int age;
-
-	switch (user_input)
+	switch (user_input_edit)
 	{
 	case 1:
 		cin.ignore();
-		cout << "Enter last name\n";
-		cin.getline(str_user_input, 200);
-
-		strcpy(people[user_input - 1].name, str_user_input);
+		Edit_Last_Name(people, user_input - 1);
 		break;
 	case 2:
 		/*cin.ignore();*/
-		cout << "Enter age\n";
-		cin >> age;
-
-		people[user_input - 1].age = age;
+		Edit_Age(people, user_input - 1);
 		break;
 	case 3:
 		cin.ignore();
-		cout << "Enter phone number\n";
-		cin.getline(str_user_input, 200);
-
-		strcpy(people[user_input - 1].phone_number, str_user_input);
+		Edit_Phone_Number(people, user_input - 1);
 		break;
 	default:
 		break;
@@ -135,22 +147,43 @@ Person* Search_Person(Person* people, char* str_last_name, int size_1, int& size
 	return surnames_found;
 }
 
+void Add_Person(Person*& people, int& size)
+{
+	size++;
+	Person* new_person = new Person[size];
+
+	for (int i = 0; i < size - 1; i++)
+	{
+		new_person[i] = people[i];
+	}
+
+	Edit_Last_Name(new_person, size - 1);
+	Edit_Age(new_person, size - 1);
+	Edit_Phone_Number(new_person, size - 1);
+
+	delete[] people;
+
+	people = new_person;
+}
+
 int main()
 {
 	int size_1;
 	Person* people = Reading_from_File(size_1);
 
-	/*Edit_Person(people, size);*/
+	/*Edit_Person(people, size_1);
+	Show_People(people, size_1);*/
 
-	Show_People(people, size_1);
-
-	int size_2;
+	/*int size_2;
 	char str[] = "Noina";
 	Person* surnames_found = Search_Person(people, str, size_1, size_2);
-	Show_People(surnames_found, size_2);
+	Show_People(surnames_found, size_2);*/
+
+	Add_Person(people, size_1);
+	Show_People(people, size_1); 
 
 	delete[] people;
-	delete[] surnames_found;
+	/*delete[] surnames_found;*/
 
 	return 0;
 }

@@ -190,6 +190,81 @@ void Delete_Person(Person*& people, int& size)
 	people = new_person;
 }
 
+Person* Search_by_Age(Person* people, int size_1, int& size_2)
+{
+	int age;
+	cout << "Enter age:\n";
+	cin >> age;
+
+	int counter = 0;
+
+	for (int i = 0; i < size_1; i++)
+	{
+		if (age == people[i].age)
+		{
+			counter++;
+		}
+	}
+
+	Person* search_age = new Person[counter];
+	int counter_index = 0;
+
+	for (int i = 0; i < size_1; i++)
+	{
+		if (age == people[i].age)
+		{
+			search_age[counter_index++] = people[i];
+		}
+	}
+
+	size_2 = counter;
+
+	return search_age;
+}
+
+Person* Search_by_Letter_Name(Person* people, int size_1, int& size_2)
+{
+	char letter_name;
+	cout << "Enter letter name:\n";
+	cin >> letter_name;
+
+	int counter = 0;
+
+	for (int i = 0; i < size_1; i++)
+	{
+		if (letter_name == people[i].name[0])
+		{
+			counter++;
+		}
+	}
+
+	Person* search_letter_name = new Person[counter];
+	int counter_index = 0;
+
+	for (int i = 0; i < size_1; i++)
+	{
+		if (letter_name == people[i].name[0])
+		{
+			search_letter_name[counter_index++] = people[i];
+		}
+	}
+
+	size_2 = counter;
+
+	return search_letter_name;
+}
+
+void Safe_People(Person* people, int size)
+{
+	FILE* p_file = fopen(R"(F:\Temp_File\file_people_new.txt)", "w");
+
+	for (int i = 0; i < size; i++)
+	{
+		fprintf(p_file, "%s %i %s\n", people[i].name, people[i].age, people[i].phone_number);
+	}
+
+}
+
 int main()
 {
 	int size_1;
@@ -203,14 +278,25 @@ int main()
 	Person* surnames_found = Search_Person(people, str, size_1, size_2);
 	Show_People(surnames_found, size_2);*/
 
-	/*Add_Person(people, size_1);
-	Show_People(people, size_1); */
+	//Add_Person(people, size_1);
+	//Show_People(people, size_1); 
 
 	//Show_People(people, size_1);
 	//Delete_Person(people, size_1);
 	//Show_People(people, size_1);
 
+	/*Safe_People(people, size_1);*/
+
+	/*int size_2;
+	Person* new_age = Search_by_Age(people, size_1, size_2);
+	Show_People(new_age, size_2);*/
+
+	/*int size_2;
+	Person* new_age = Search_by_Letter_Name(people, size_1, size_2);
+	Show_People(new_age, size_2);*/
+
 	delete[] people;
+	/*delete[] new_age;*/
 	/*delete[] surnames_found;*/
 
 	return 0;

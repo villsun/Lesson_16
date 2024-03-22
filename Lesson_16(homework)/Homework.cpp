@@ -120,8 +120,12 @@ void Show_People(Person* people, int size)
 
 }
 
-Person* Search_Person(Person* people, char* str_last_name, int size_1, int& size_2)
+Person* Search_Person(Person* people, int size_1, int& size_2)
 {
+	char str_last_name[200];
+	cout << "Enter Name:\n";
+	cin >> str_last_name;
+
 	int counter_1 = 0;
 	for (int i = 0; i < size_1; i++)
 	{
@@ -254,7 +258,7 @@ Person* Search_by_Letter_Name(Person* people, int size_1, int& size_2)
 	return search_letter_name;
 }
 
-void Safe_People(Person* people, int size)
+void Save_People(Person* people, int size)
 {
 	FILE* p_file = fopen(R"(F:\Temp_File\file_people_new.txt)", "w");
 
@@ -270,34 +274,60 @@ int main()
 	int size_1;
 	Person* people = Reading_from_File(size_1);
 
-	/*Edit_Person(people, size_1);
-	Show_People(people, size_1);*/
+	int user_input;
+	Person* people_new;
+	int size_2;
+	do
+	{
+		do
+		{
+			cout << "Enter what do you waant:\n1 - Edit person\n2 - Search person\n3 - Add person\n4 - Delete person\n5 - Search by age\n6 - Search by letter name\n7 - Save people\n0 to stop\n";
+			cin >> user_input;
+		} while (user_input < 0 || user_input>7);
 
-	/*int size_2;
-	char str[] = "Noina";
-	Person* surnames_found = Search_Person(people, str, size_1, size_2);
-	Show_People(surnames_found, size_2);*/
+		if (user_input == 0)
+		{
+			Save_People(people, size_1);
+			break;
+		}
 
-	//Add_Person(people, size_1);
-	//Show_People(people, size_1); 
-
-	//Show_People(people, size_1);
-	//Delete_Person(people, size_1);
-	//Show_People(people, size_1);
-
-	/*Safe_People(people, size_1);*/
-
-	/*int size_2;
-	Person* new_age = Search_by_Age(people, size_1, size_2);
-	Show_People(new_age, size_2);*/
-
-	/*int size_2;
-	Person* new_age = Search_by_Letter_Name(people, size_1, size_2);
-	Show_People(new_age, size_2);*/
-
+		switch (user_input)
+		{
+		case 1:
+			Edit_Person(people, size_1);
+			Show_People(people, size_1);
+			break;
+		case 2:
+			people_new = Search_Person(people, size_1, size_2);
+			Show_People(people_new, size_2);
+			delete[] people_new;
+			break;
+		case 3:
+			Add_Person(people, size_1);
+			Show_People(people, size_1);
+			break;
+		case 4:
+			Delete_Person(people, size_1);
+			Show_People(people, size_1);
+			break;
+		case 5:
+			people_new = Search_by_Age(people, size_1, size_2);
+			Show_People(people_new, size_2);
+			delete[] people_new;
+			break;
+		case 6:
+			people_new = Search_by_Letter_Name(people, size_1, size_2);
+			Show_People(people_new, size_2);
+			delete[] people_new;
+			break;
+		case 7:
+			Save_People(people, size_1);
+			break;
+		default:
+			break;
+		}
+	} while (true);
 	delete[] people;
-	/*delete[] new_age;*/
-	/*delete[] surnames_found;*/
 
 	return 0;
 }
